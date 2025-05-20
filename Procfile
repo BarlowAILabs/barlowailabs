@@ -1,1 +1,2 @@
-web: gunicorn BarlowAILabs.wsgi --log-file -
+web: gunicorn BarlowAILabs.wsgi:application
+
