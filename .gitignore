@@ -1,0 +1,24 @@
+# Python virtual environment folder
+env/
+
+# Environment variables file
+.env
+
+# Node modules folder
+node_modules/
+
+# Python cache files
+*.pyc
+__pycache__/
+
+# Django local SQLite database
+db.sqlite3
+
+# Collected static files (optional, created during deployment)
+staticfiles/
+
+# VS Code settings folder (optional)
+.vscode/
+
+# macOS system files (optional)
+.DS_Store
