@@ -26,11 +26,11 @@
   <link rel="icon" href="{% static 'img/shared image (f).png' %}" type="image/png" sizes="32x32">
   <link rel="shortcut icon" href="{% static 'img/shared image (f).png' %}" alt="Barlow AI Labs Logo" sizes="32x32">
   
-  {% load static compress %}
+{% load compress static %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endcompress %}
 
-  {% compress css %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  {% endcompress %}
 </head>
 
 <body class="dark:bg-gray-900  ">
