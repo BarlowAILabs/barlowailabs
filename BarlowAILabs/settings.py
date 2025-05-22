@@ -102,6 +102,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- Static file compression ---
 COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True 
 COMPRESS_ROOT = BASE_DIR / 'BarlowAILabs'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
