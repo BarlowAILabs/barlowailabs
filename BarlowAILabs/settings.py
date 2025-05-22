@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'compressor',
+    'flowbiteapp',
 ]
 
 # --- Middleware ---
@@ -101,8 +102,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- Static file compression ---
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True 
+COMPRESS_ENABLED = True 
 COMPRESS_ROOT = BASE_DIR / 'BarlowAILabs'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
