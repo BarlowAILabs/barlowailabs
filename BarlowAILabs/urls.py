@@ -19,7 +19,7 @@ from django.urls import path
 from django.contrib.sitemaps.views import sitemap
 from django.conf import settings
 from. import views
-from yourapp.sitemaps import StaticViewSitemap
+from barlowailabs.sitemaps import StaticViewSitemap 
 
 sitemaps = {
     'static': StaticViewSitemap,
