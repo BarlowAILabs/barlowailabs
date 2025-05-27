@@ -237,7 +237,6 @@ function showToastModal() {
   }, 5000);
 }
 const contactForm = document.getElementById('contact-form');
-
 if (contactForm) {
   contactForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -255,37 +254,26 @@ if (contactForm) {
         'X-CSRFToken': '{{ csrf_token }}'
       }
     })
-    .then(async response => {
-      const contentType = response.headers.get('content-type');
-
-      if (contentType && contentType.includes('application/json')) {
-        const data = await response.json();
-        if (data.message === 'Your message has been sent successfully!') {
-          showToastModal(data.message);
-          contactForm.reset();
-        } else {
-          showToastModal(data.message || 'Something went wrong. Please try again.');
-        }
+    .then(response => response.json())
+    .then(data => {
+      if (data.message === 'Your message has been sent successfully!') {
+        showToastModal(data.message);
+        contactForm.reset();
       } else {
-        const rawText = await response.text();
-        console.error('⚠️ Server returned non-JSON response:', rawText);
-        showToastModal('Unexpected error occurred. Check console for details.');
+        showToastModal('Something went wrong. Please try again.');
       }
     })
     .catch(error => {
-      console.error('❌ Fetch error:', error);
+      console.error('Error:', error);
       showToastModal('An error occurred. Please try again later.');
     })
     .finally(() => {
       hideSpinnerButton();
-      sendBtn.disabled = false; // Re-enable button
     });
   });
 }
-
 const dynamicTextElement = document.getElementById('dynamic-text');
 if (!dynamicTextElement) {
-  // Optional: you can safely remove this block if it’s unused
   return;
 }  
 const words = ['Creations', 'Services', 'Solutions', 'Products', 'Successes'];
