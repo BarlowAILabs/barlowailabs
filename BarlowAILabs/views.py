@@ -6,6 +6,8 @@ from django.http import JsonResponse
 import os
 import logging
 import requests
+from django.core.mail import EmailMultiAlternatives
+
 
 def index(request):
     return render(request, 'index.html')
@@ -26,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 def contact_form(request):
     if request.method == 'POST':
-        #  reCAPTCHA validation
+        # reCAPTCHA validation
         recaptcha_response = request.POST.get('g-recaptcha-response')
         if not recaptcha_response:
             return JsonResponse({'message': 'reCAPTCHA verification failed.'}, status=400)
@@ -43,7 +45,7 @@ def contact_form(request):
         if not result.get('success'):
             return JsonResponse({'message': 'reCAPTCHA verification failed.'}, status=400)
 
-        # --- Proceed with form logic after successful reCAPTCHA ---
+        # Proceed with form logic after successful reCAPTCHA
         name = request.POST.get('name')
         email = request.POST.get('email')
         subject = request.POST.get('subject')
@@ -52,10 +54,11 @@ def contact_form(request):
         from_email = settings.EMAIL_HOST_USER
         to_email = settings.EMAIL_HOST_USER
 
+        # Send contact message to your email
         contact_message = EmailMessage(
-            subject, 
-            message, 
-            from_email, 
+            subject,
+            message,
+            from_email,
             [to_email],
             reply_to=[email],
         )
@@ -65,11 +68,11 @@ def contact_form(request):
             logger.error(f"Error sending contact email: {e}")
             return JsonResponse({'message': 'Error sending message. Please try again later.'}, status=500)
 
-        # Auto-response email
+        # Auto-response email with Google Form link
         google_form_link = "https://docs.google.com/forms/d/e/1FAIpQLScsGNySFzLaWvSRbq9SJbsoU32LFleLB2jwJitu7xT9Nr_qVw/viewform?usp=header"
         google_form_link_text = "Click here to fill the form"
 
-        automated_message = f"""
+        automated_message_html = f"""
         <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
             <p>Dear {name},</p>
             <p>Thank you for contacting Barlow AI Labs for your web development needs!</p>
@@ -79,14 +82,7 @@ def contact_form(request):
         </div>
         """
 
-        automated_email = EmailMessage(
-            "Thank you for contacting Barlow AI Labs!",
-            automated_message,
-            from_email,
-            [email],
-        )
-        automated_email.content_subtype = 'html'
-        automated_email.plain_text_content = f"""
+        automated_message_plain = f"""
         Dear {name},
 
         Thank you for contacting Barlow AI Labs!
@@ -99,6 +95,14 @@ def contact_form(request):
         Barlow AI Labs
         """
 
+        automated_email = EmailMultiAlternatives(
+            "Thank you for contacting Barlow AI Labs!",
+            automated_message_plain,
+            from_email,
+            [email],
+        )
+        automated_email.attach_alternative(automated_message_html, "text/html")
+
         try:
             automated_email.send()
         except Exception as e:
@@ -106,6 +110,7 @@ def contact_form(request):
 
         return JsonResponse({'message': 'Your message has been sent successfully!'}, status=200)
 
+    # GET request - render contact form with site key
     return render(request, 'contact.html', {
         'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY
     })

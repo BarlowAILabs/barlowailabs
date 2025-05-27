@@ -200,6 +200,21 @@ if (document.querySelector(".about-image")) {
 window.onload = function() {
   history.replaceState("", document.title, window.location.pathname + window.location.search);
 }
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 function showSpinnerButton() {
   const sendBtn = document.getElementById('send-message-btn');
   const spinnerBtn = document.getElementById('spinner-btn');
@@ -221,13 +236,17 @@ function hideSpinnerButton() {
   sendBtn.classList.remove('opacity-0', 'pointer-events-none');
   sendBtn.classList.add('opacity-100');
 
-  // Re-enable the submit button after debounce period
   setTimeout(() => {
     sendBtn.disabled = false;
-  }, 1000); // 1 second debounce — adjust as needed
+  }, 1000);
 }
-function showToastModal() {
+
+function showToastModal(message) {
   const modal = document.getElementById('toast-modal');
+  const toastMessage = document.getElementById('toast-message');
+  if(toastMessage) {
+    toastMessage.textContent = message;
+  }
   modal.classList.remove('opacity-0', 'pointer-events-none');
   modal.classList.add('opacity-100');
 
@@ -236,13 +255,14 @@ function showToastModal() {
     modal.classList.add('opacity-0', 'pointer-events-none');
   }, 5000);
 }
+
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', function(event) {
     event.preventDefault();
 
     const sendBtn = document.getElementById('send-message-btn');
-    sendBtn.disabled = true; // ✅ Prevent rapid re-clicks
+    sendBtn.disabled = true;
 
     const formData = new FormData(this);
     showSpinnerButton();
@@ -251,7 +271,7 @@ if (contactForm) {
       method: 'POST',
       body: formData,
       headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
+        'X-CSRFToken': getCookie('csrftoken')
       }
     })
     .then(response => response.json())
@@ -259,8 +279,11 @@ if (contactForm) {
       if (data.message === 'Your message has been sent successfully!') {
         showToastModal(data.message);
         contactForm.reset();
+        if (window.grecaptcha) {
+          grecaptcha.reset();
+        }
       } else {
-        showToastModal('Something went wrong. Please try again.');
+        showToastModal(data.message || 'Something went wrong. Please try again.');
       }
     })
     .catch(error => {
@@ -272,6 +295,7 @@ if (contactForm) {
     });
   });
 }
+
 const dynamicTextElement = document.getElementById('dynamic-text');
 if (!dynamicTextElement) {
   return;
