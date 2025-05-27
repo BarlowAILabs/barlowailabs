@@ -119,3 +119,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # --- Default PK field ---
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- reCAPTCHA ---
+RECAPTCHA_SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY = os.getenv('RECAPTCHA_SECRET_KEY')

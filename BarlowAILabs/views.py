@@ -25,6 +25,24 @@ logger = logging.getLogger(__name__)
 
 def contact_form(request):
     if request.method == 'POST':
+        # ✅ reCAPTCHA validation
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        if not recaptcha_response:
+            return JsonResponse({'message': 'reCAPTCHA verification failed.'}, status=400)
+
+        recaptcha_check = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={
+                'secret': settings.RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+        )
+        result = recaptcha_check.json()
+
+        if not result.get('success'):
+            return JsonResponse({'message': 'reCAPTCHA verification failed.'}, status=400)
+
+        # --- Proceed with form logic after successful reCAPTCHA ---
         name = request.POST.get('name')
         email = request.POST.get('email')
         subject = request.POST.get('subject')
@@ -46,46 +64,28 @@ def contact_form(request):
             logger.error(f"Error sending contact email: {e}")
             return JsonResponse({'message': 'Error sending message. Please try again later.'}, status=500)
 
-        google_form_link = "https://docs.google.com/forms/d/e/1FAIpQLScsGNySFzLaWvSRbq9SJbsoU32LFleLB2jwJitu7xT9Nr_qVw/viewform?usp=header"  # Set your Google Form link here
-        google_form_link_text = "Click here to fill the form" # Customize the link text
+        # Auto-response email
+        google_form_link = "https://docs.google.com/forms/d/e/1FAIpQLScsGNySFzLaWvSRbq9SJbsoU32LFleLB2jwJitu7xT9Nr_qVw/viewform?usp=header"
+        google_form_link_text = "Click here to fill the form"
 
         automated_message = f"""
         <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-            <p style="margin-bottom: 10px; line-height: 1.6;">
-                Dear {name},
-            </p>
-
-            <p style="margin-bottom: 10px; line-height: 1.6; color: #333">
-                Thank you for contacting Barlow AI Labs for your web development needs! We're excited to learn more about your project.
-            </p>
-
-            <p style="margin-bottom: 10px; line-height: 1.6;color: #333">
-                To get started, please complete our brief questionnaire: <a href="{google_form_link}" style="color: #007bff; text-decoration: none;">{google_form_link_text}</a>
-            </p>
-
-            <p style="margin-bottom: 10px; line-height: 1.6;color: #333">
-                This will help us understand your vision and goals so we can create a website that perfectly meets your needs. We look forward to collaborating with you!
-            </p>
-
-            <div style="text-align: left; padding-top: 20px; font-family: Arial, sans-serif; font-size: 14px; color: #666;">
-                Best regards,<br>
-                Barlow AI Labs
-            </div>
+            <p>Dear {name},</p>
+            <p>Thank you for contacting Barlow AI Labs for your web development needs!</p>
+            <p>Please complete our brief questionnaire: <a href="{google_form_link}" style="color: #007bff;">{google_form_link_text}</a></p>
+            <p>We look forward to collaborating with you!</p>
+            <div style="padding-top: 20px;">Best regards,<br>Barlow AI Labs</div>
         </div>
         """
 
         automated_email = EmailMessage(
-            "Thank you for contacting Barlow AI Labs!",  # Subject
-            automated_message.format(name=name),  # Use .format()
+            "Thank you for contacting Barlow AI Labs!",
+            automated_message,
             from_email,
             [email],
         )
-
-        # Set content subtype to HTML
         automated_email.content_subtype = 'html'
-
-        # Plain text version
-        plain_text_message = f"""
+        automated_email.plain_text_content = f"""
         Dear {name},
 
         Thank you for contacting Barlow AI Labs!
@@ -98,8 +98,6 @@ def contact_form(request):
         Barlow AI Labs
         """
 
-        automated_email.plain_text_content = plain_text_message
-
         try:
             automated_email.send()
         except Exception as e:
@@ -107,6 +105,8 @@ def contact_form(request):
 
         return JsonResponse({'message': 'Your message has been sent successfully!'}, status=200)
 
-    return render(request, 'contact.html')
+    return render(request, 'contact.html', {
+        'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY
+    })
 
 
