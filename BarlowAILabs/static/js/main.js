@@ -225,7 +225,6 @@ function showSpinnerButton() {
   spinnerBtn.classList.remove('opacity-0', 'pointer-events-none');
   spinnerBtn.classList.add('opacity-100');
 }
-
 function hideSpinnerButton() {
   const sendBtn = document.getElementById('send-message-btn');
   const spinnerBtn = document.getElementById('spinner-btn');
@@ -240,12 +239,11 @@ function hideSpinnerButton() {
     sendBtn.disabled = false;
   }, 1000);
 }
-
 function showToastModal(message) {
   const modal = document.getElementById('toast-modal');
-  const toastMessage = document.getElementById('toast-message');
-  if(toastMessage) {
-    toastMessage.textContent = message;
+  const messageElement = document.querySelector('#toast-message h3');
+  if (messageElement) {
+    messageElement.textContent = message;  // Update only the text inside the <h3>
   }
   modal.classList.remove('opacity-0', 'pointer-events-none');
   modal.classList.add('opacity-100');
@@ -255,7 +253,21 @@ function showToastModal(message) {
     modal.classList.add('opacity-0', 'pointer-events-none');
   }, 5000);
 }
-
+// Helper function to get CSRF token from cookies (if you don't already have it)
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', function(event) {
@@ -295,7 +307,6 @@ if (contactForm) {
     });
   });
 }
-
 const dynamicTextElement = document.getElementById('dynamic-text');
 if (!dynamicTextElement) {
   return;
