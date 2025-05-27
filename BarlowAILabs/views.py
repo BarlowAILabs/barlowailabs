@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import JsonResponse
 import os
 import logging
+import requests
 
 def index(request):
     return render(request, 'index.html')
