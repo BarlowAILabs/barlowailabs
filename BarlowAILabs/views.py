@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 def contact_form(request):
     if request.method == 'POST':
-        # ✅ reCAPTCHA validation
+        #  reCAPTCHA validation
         recaptcha_response = request.POST.get('g-recaptcha-response')
         if not recaptcha_response:
             return JsonResponse({'message': 'reCAPTCHA verification failed.'}, status=400)
