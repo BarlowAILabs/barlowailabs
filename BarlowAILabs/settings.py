@@ -11,8 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --- Security ---
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').replace(" ", "").split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').replace(" ", "").split(',')
 
 # --- Admins ---
 ADMINS = [('Admin', 'tevin@barlowailabs.com')]
