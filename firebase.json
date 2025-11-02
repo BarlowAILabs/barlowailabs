@@ -17,7 +17,7 @@
     }
   ],
   "hosting": {
-    "public": "BarlowAILabs/templates",
+    "public": "templates",
     "ignore": [
       "firebase.json",
       "**/.*",
