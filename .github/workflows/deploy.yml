@@ -15,11 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # This ONE step does both auth and deploy
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2'
         with:
-          channelId: live
-          projectId: barlowailabs
-          workloadIdentityProvider: 'projects/453734132373/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          serviceAccount: 'github-deployer@barlowailabs.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/453734132373/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-deployer@barlowailabs.iam.gserviceaccount.com'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting --project barlowailabs --non-interactive
