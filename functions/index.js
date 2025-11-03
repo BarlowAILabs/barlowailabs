@@ -15,6 +15,8 @@ const RECAPTCHA_SECRET_KEY_NAME = "RECAPTCHA_SECRET_KEY";
 // --- This is your new backend function ---
 exports.sendContactEmail = onCall({
   secrets: [RECAPTCHA_SECRET_KEY_NAME], // Give this function access to the secret
+  cors: ["https://barlowailabs.web.app", "https://barlowailabs.com", "http://localhost:5000"], // Allow requests from your domain and localhost
+  maxInstances: 10,
 }, async (request) => {
   
   // 1. Get the data from the form
