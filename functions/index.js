@@ -1,5 +1,5 @@
+// Final permission fix
 // Re-deploying to get new database permissions
-
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { getFirestore } = require("firebase-admin/firestore");
 const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
