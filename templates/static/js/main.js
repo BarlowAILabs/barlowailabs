@@ -24,7 +24,7 @@ const functions = getFunctions(app, 'europe-west4');
 document.addEventListener('DOMContentLoaded', function() {
   gsap.registerPlugin(ScrollTrigger);
 
-  // --- GSAP ANIMATIONS (from your file) ---
+  // --- GSAP ANIMATIONS ---
   if (document.querySelector(".hero-content")) {
     gsap.from(".hero-content", { y: 50, duration: 2, ease: "power2.out", stagger: 0.1 });
   }
@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.from(".about-image", { opacity: 0, x: 50, duration: 1, ease: "power2.out", scrollTrigger: { trigger: ".about-image", start: "top 80%", toggleActions: "play none none none" } });
   }
 
-  // --- DYNAMIC TEXT (from your file) ---
+  // --- DYNAMIC TEXT ---
   const dynamicTextElement = document.getElementById('dynamic-text');
   if (dynamicTextElement) {
     const words = ['Creations', 'Services', 'Solutions', 'Products', 'Successes'];
     function rotateWords() {
       const dynamicTextElement = document.getElementById('dynamic-text');
-      if (!dynamicTextElement) return; // Check if element exists
+      if (!dynamicTextElement) return;
       const currentWord = dynamicTextElement.textContent.trim();
       const currentIndex = words.indexOf(currentWord);
       const nextIndex = (currentIndex + 1) % words.length;
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     rotateWords();
   }
 
-  // --- MENU/THEME LOGIC (from your file) ---
+  // --- MENU/THEME LOGIC ---
   const menuButton = document.getElementById('menu-button');
   const navbar = document.getElementById('navbar-default');
   const iconContainer = document.getElementById('icon-container');
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // --- FORM HELPER FUNCTIONS (from your file) ---
+  // --- FORM HELPER FUNCTIONS ---
   const sendMessageBtn = document.getElementById('send-message-btn');
   const spinnerBtn = document.getElementById('spinner-btn');
   const toastModal = document.getElementById('toast-modal');
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
       sendMessageBtn.classList.remove('opacity-0', 'pointer-events-none');
       sendMessageBtn.classList.add('opacity-100');
       setTimeout(() => {
-        sendMessageBtn.disabled = false;
+        if(sendMessageBtn) sendMessageBtn.disabled = false;
       }, 1000);
     }
   }
@@ -210,14 +210,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (messageElement) {
       messageElement.textContent = message;
     }
-    if (toastModal) {
+    if (toastModal && window.flowbite) {
       // Use Flowbite's Modal class to show it
       const modal = new flowbite.Modal(toastModal);
       modal.show();
+    } else if (toastModal) {
+      // Fallback if flowbite isn't loaded
+      toastModal.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toastModal.classList.add('opacity-0', 'pointer-events-none');
+      }, 5000);
     }
   }
 
-  // --- *** NEW CONTACT FORM LOGIC *** ---
+  // --- *** NEW FIREBASE CONTACT FORM LOGIC *** ---
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
