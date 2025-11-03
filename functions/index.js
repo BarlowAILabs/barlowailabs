@@ -2,7 +2,6 @@
 // Re-deploying to get new database permissions
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { getFirestore } = require("firebase-admin/firestore");
-const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 const admin = require("firebase-admin");
 const axios = require("axios");
 
