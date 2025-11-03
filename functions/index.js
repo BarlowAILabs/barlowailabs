@@ -1,11 +1,4 @@
-// Final permission fix for Service Account User
-// Final permission fix for Secret Accessor role
-// Final permission fix for Secret Accessor role
-// Final permission fix for Functions Developer role
-// Final permissions fix for Extensions Viewer
-// Final permission fix for Service Usage
-// Final permission fix
-// Re-deploying to get new database permissions
+// Final version with all permissions
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { getFirestore } = require("firebase-admin/firestore");
 const admin = require("firebase-admin");
@@ -19,8 +12,8 @@ const RECAPTCHA_SECRET_KEY_NAME = "RECAPTCHA_SECRET_KEY";
 
 // --- This is your new backend function ---
 exports.sendContactEmail = onCall({
-  secrets: [RECAPTCHA_SECRET_KEY_NAME], // Give this function access to the secret
-  cors: ["https://barlowailabs.web.app", "https://barlowailabs.com", "http://localhost:5000"], // Allow requests from your domain and localhost
+  secrets: [RECAPTCHA_SECRET_KEY_NAME], // This tells Firebase to mount the secret
+  cors: ["https://barlowailabs.web.app", "https://barlowailabs.com", "http://localhost:5000"],
   maxInstances: 10,
 }, async (request) => {
   
@@ -31,11 +24,12 @@ exports.sendContactEmail = onCall({
   const message = request.data.message;
   const recaptchaToken = request.data.recaptchaToken;
 
-  // 2. Get the secret key from the vault
+  // 2. Get the secret key from the environment (THIS IS THE FIX)
+  // This reads the secret that Firebase securely mounted for us.
   const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
   if (!recaptchaSecret) {
-    console.error("Could not access secret key.");
-    throw new HttpsError("internal", "Could not access secret key.");
+    console.error("Could not access process.env.RECAPTCHA_SECRET_KEY.");
+    throw new HttpsError("internal", "Server configuration error.");
   }
 
   // 3. Verify the reCAPTCHA token
@@ -98,10 +92,7 @@ exports.sendContactEmail = onCall({
 
   // 5. Add both emails to the "mail" collection for the extension to send
   try {
-    // We get a reference to the 'mail' collection
     const mailCollection = firestore.collection("mail");
-    
-    // Add both emails as new documents
     await mailCollection.add(autoReply);
     await mailCollection.add(adminNotification);
 
