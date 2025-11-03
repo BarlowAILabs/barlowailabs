@@ -15,19 +15,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- THIS IS THE NEW DEBUGGING STEP ---
-      - name: List files in repository
-        run: ls -R
-      # --------------------------------------
-
       - name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/453734132373/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-deployer@barlowailabs.iam.gserviceaccount.com'
 
+      # --- NEW STEP ADDED HERE ---
+      - name: Install function dependencies
+        run: npm --prefix functions install
+      # -------------------------
+
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase
         run: firebase deploy --only hosting,functions --project barlowailabs --non-interactive
