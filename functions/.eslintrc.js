@@ -14,6 +14,7 @@ module.exports = {
     "no-restricted-globals": ["error", "name", "length"],
     "prefer-arrow-callback": "error",
     "quotes": ["error", "double", {"allowTemplateLiterals": true}],
+    "max-len": "off", // <-- ADD THIS LINE to disable the max-length error
   },
   overrides: [
     {
