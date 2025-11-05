@@ -21,15 +21,15 @@ jobs:
           workload_identity_provider: 'projects/453734132373/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-deployer@barlowailabs.iam.gserviceaccount.com'
 
-      # --- NEW STEP 1: Install root dependencies (Tailwind) ---
+      # --- THIS IS THE FIX ---
+      # Step 1: Install root dependencies (like Tailwind)
       - name: Install Root Dependencies
         run: npm install
       
-      # --- NEW STEP 2: Build Tailwind CSS ---
-      # (This creates the 'style.css' file)
+      # Step 2: Build the Tailwind CSS file (using your exact command)
       - name: Build Tailwind CSS
         run: npm run build
-      # -----------------------------------------------
+      # -------------------------
 
       - name: Install function dependencies
         run: npm --prefix functions install
