@@ -2,7 +2,7 @@
 module.exports = {
   mode: 'jit',
   content: [
-    "./BarlowAILabs/**/*.{html,js}",
+    "./templates/**/*.{html,js}",
     "./node_modules/flowbite/**/*.js",
   ],
   
@@ -36,4 +36,3 @@ module.exports = {
     require('flowbite-typography'),
   ],
 };
-
