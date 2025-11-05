@@ -1,0 +1,3 @@
+constraint: constraints/gcp.restrictNonCmekServices
+listPolicy:
+  allValues: ALLOW

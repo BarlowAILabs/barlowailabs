@@ -1,106 +1,76 @@
-// Final version with all permissions
-const { onCall, HttpsError } = require("firebase-functions/v2/https");
-const { getFirestore } = require("firebase-admin/firestore");
+// Final version with added logging for diagnostics
+const {onCall, HttpsError} = require("firebase-functions/v2/https");
+const {getFirestore} = require("firebase-admin/firestore");
 const admin = require("firebase-admin");
 const axios = require("axios");
 
-// Initialize Firebase Admin so we can talk to Firestore
+// Initialize Firebase Admin
 admin.initializeApp();
 
-// Define the name of the secret we created in the vault
 const RECAPTCHA_SECRET_KEY_NAME = "RECAPTCHA_SECRET_KEY";
 
-// --- This is your new backend function ---
 exports.sendContactEmail = onCall({
-  secrets: [RECAPTCHA_SECRET_KEY_NAME], // This tells Firebase to mount the secret
-  cors: ["https://barlowailabs.web.app", "https://barlowailabs.com", "http://localhost:5000"],
+  region: "europe-west4",
+  secrets: [RECAPTCHA_SECRET_KEY_NAME],
   maxInstances: 10,
 }, async (request) => {
-  
-  // 1. Get the data from the form
-  const name = request.data.name;
-  const email = request.data.email;
-  const subject = request.data.subject;
-  const message = request.data.message;
-  const recaptchaToken = request.data.recaptchaToken;
-
-  // 2. Get the secret key from the environment (THIS IS THE FIX)
-  // This reads the secret that Firebase securely mounted for us.
   const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
   if (!recaptchaSecret) {
-    console.error("Could not access process.env.RECAPTCHA_SECRET_KEY.");
-    throw new HttpsError("internal", "Server configuration error.");
+    console.error("CRITICAL: Failed to access reCAPTCHA secret.");
+    throw new HttpsError("internal", "A server configuration error occurred.");
   }
 
-  // 3. Verify the reCAPTCHA token
-  let verificationResponse;
+  const {name, email, subject, message, recaptchaToken} = request.data;
+
   try {
-    verificationResponse = await axios.post(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`
+    const verificationResponse = await axios.post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`,
     );
+    if (!verificationResponse.data.success) {
+      console.warn("reCAPTCHA verification failed:", verificationResponse.data["error-codes"]);
+      throw new HttpsError("invalid-argument", "reCAPTCHA verification failed.");
+    }
   } catch (error) {
-    console.error("Failed to verify reCAPTCHA:", error);
+    console.error("Error during reCAPTCHA POST request:", error);
     throw new HttpsError("internal", "Failed to verify reCAPTCHA.");
   }
 
-  if (!verificationResponse.data.success) {
-    console.warn("reCAPTCHA verification failed:", verificationResponse.data);
-    throw new HttpsError(
-      "invalid-argument",
-      "reCAPTCHA verification failed."
-    );
-  }
-
-  // 4. reCAPTCHA is valid! Get ready to send emails.
-  const firestore = getFirestore();
-
-  // --- Email 1: Auto-reply to the User ---
-  const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLScsGNySFzLaWvSRbq9SJbsoU32LFleLB2jwJitu7xT9Nr_qVw/viewform?usp=header";
-  
-  const autoReply = {
-    to: [email],
-    message: {
-      subject: "Thank you for contacting Barlow AI Labs!",
-      html: `
-        <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-            <p>Dear ${name},</p>
-            <p>Thank you for contacting Barlow AI Labs for your web development needs!</p>
-            <p>Please complete our brief questionnaire: <a href="${googleFormLink}" style="color: #007bff;">Click here to fill the form</a></p>
-            <p>We look forward to collaborating with you!</p>
-            <div style="padding-top: 20px;">Best regards,<br>Barlow AI Labs</div>
-        </div>
-      `,
-    },
-  };
-
-  // --- Email 2: Notification to You (the Admin) ---
-  const adminNotification = {
-    to: ["tevin@barlowailabs.com"],
-    replyTo: email, // So you can "Reply" directly to the user
-    message: {
-      subject: `New Contact Form: ${subject}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-            <p><strong>New message from:</strong> ${name} (${email})</p>
-            <hr>
-            <p><strong>Message:</strong></p>
-            <p style="white-space: pre-wrap;">${message}</p>
-        </div>
-      `,
-    },
-  };
-
-  // 5. Add both emails to the "mail" collection for the extension to send
   try {
+    const firestore = getFirestore();
     const mailCollection = firestore.collection("mail");
-    await mailCollection.add(autoReply);
-    await mailCollection.add(adminNotification);
+    const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLScsGNySFzLaWvSRbq9SJbsoU32LFleLB2jwJitu7xT9Nr_qVw/viewform?usp=header";
 
+    const autoReply = {
+      to: [email],
+      message: {
+        subject: "Thank you for contacting Barlow AI Labs!",
+        html: `<p>Dear ${name},</p><p>Thank you for contacting Barlow AI Labs! To help us understand your needs, please complete our brief questionnaire: <a href="${googleFormLink}">Click here</a>.</p><p>Best regards,<br>The Barlow AI Labs Team</p>`,
+      },
+    };
+
+    const adminNotification = {
+      to: ["tevin@barlowailabs.com"],
+      replyTo: email,
+      message: {
+        subject: `New Contact Form: ${subject}`,
+        html: `<p><strong>From:</strong> ${name} (${email})</p><hr><p><strong>Message:</strong></p><p>${message}</p>`,
+      },
+    };
+
+    // *** DIAGNOSTIC LOGGING ***
+    console.log("About to write the following objects to Firestore:");
+    console.log("Auto-Reply Object:", JSON.stringify(autoReply, null, 2));
+    console.log("Admin Notification Object:", JSON.stringify(adminNotification, null, 2));
+
+    await Promise.all([
+      mailCollection.add(autoReply),
+      mailCollection.add(adminNotification),
+    ]);
+    console.log("Successfully added documents to 'mail' collection.");
   } catch (error) {
-    console.error("Failed to queue emails:", error);
-    throw new HttpsError("internal", "Failed to queue emails.");
+    console.error("Failed to queue emails in Firestore:", error);
+    throw new HttpsError("internal", "Failed to send email.");
   }
 
-  // 6. Send a success message back to the website
-  return { message: "Your message has been sent successfully!" };
+  return {message: "Your message has been sent successfully!"};
 });

@@ -5,11 +5,12 @@
     "tailwindcss": "^3.4.3"
   },
   "scripts": {
-    "dev": "npx tailwindcss -i static/src/input.css -o ./BarlowAILabs/css/style.css --watch",
-    "build": "npx tailwindcss -i BarlowAILabs/static/src/input.css -o BarlowAILabs/static/css/style.css --minify",
-    "prettier": "npx prettier --write '**/*.html"
+    "dev": "npx tailwindcss -i ./templates/static/src/input.css -o ./templates/static/css/style.css --watch",
+    "build": "npx tailwindcss -i ./templates/static/src/input.css -o ./templates/static/css/style.css --minify",
+    "prettier": "npx prettier --write '**/*.html'"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "flowbite": "^2.5.2"
   }
 }

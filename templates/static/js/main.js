@@ -9,7 +9,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyD4QoAl_Lplbcg2vBiy2xWwSx1-7QtfZ-8",
   authDomain: "barlowailabs.firebaseapp.com",
   projectId: "barlowailabs",
-  storageBucket: "barlowailabs.firebasestorage.app",
+  storageBucket: "barlowailabs.appspot.com",
   messagingSenderId: "453734132373",
   appId: "1:453734132373:web:9bf131539c91fe0514c99c",
   measurementId: "G-KVCPX3XE6B"
@@ -18,8 +18,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-// Get a reference to our functions, pointing to the correct region
-const functions = getFunctions(app, 'europe-west4');
+const functions = getFunctions(app, 'europe-west4'); // Specify the region
 
 // Wait for the DOM to be fully loaded before running any code
 document.addEventListener('DOMContentLoaded', function() {
@@ -245,10 +244,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
+      // Get a reference to the function
+      const sendContactEmail = httpsCallable(functions, 'sendContactEmail');
+
       try {
-        // Get a reference to our new Cloud Function
-        const sendContactEmail = httpsCallable(functions, 'sendContactEmail');
-        
         // Call the function with the form data
         const result = await sendContactEmail({
           name,
@@ -258,9 +257,11 @@ document.addEventListener('DOMContentLoaded', function() {
           recaptchaToken
         });
 
+        // The function returns a data object, get the message from it
+        const resultMessage = result.data.message;
+
         // Success! Show the toast message
-        console.log(result.data.message);
-        showToastModal(result.data.message); // Use your existing toast modal
+        showToastModal(resultMessage);
         contactForm.reset(); // Clear the form
         grecaptcha.reset(); // Reset the reCAPTCHA
 
