@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "flowbite": "^2.5.2"
+    "flowbite": "^2.5.2",
+    "next": "^16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   }
 }

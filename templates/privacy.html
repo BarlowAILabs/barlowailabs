@@ -1,4 +1,3 @@
-<!-- Flattened static templates/privacy.html (converted from Django template) -->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
@@ -20,7 +19,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 ">
+<body class="bg-white dark:bg-gray-900 ">
     <header>
       <nav class="bg-white border-gray-200 dark:bg-gray-900">
           <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -28,12 +27,20 @@
               <img src="/static/img/trace.svg" class="h-10 w-10 md:h-10 md:w-10 " alt="Barlow AI Labs Logo"/>
               <span class=" font-raleway self-center text-2xl  font-bold whitespace-nowrap dark:text-white">Barlow AI Labs</span>
             </a>
+            <button id="menu-button" type="button" class="relative inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-700 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-expanded="false">
+              <span class="sr-only">Toggle menu</span>
+              <div id="icon-container" class="relative w-10 h-10 flex items-center justify-center">
+                <span class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" style="top: 25%;"></span>
+                <span class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" style="top: 50%;"></span>
+                <span class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" style="top: 75%;"></span>
+              </div>
+            </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
               <ul class="font-medium font-raleway flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li><a href="/" class="block py-2 px-3 text-gray-900 md:text-red-700 dark:text-white">Home</a></li>
-                <li><a href="/price.html" class="block py-2 px-3 text-gray-900 dark:text-white">Pricing</a></li>
-                <li><a href="/contact.html" class="block py-2 px-3 text-gray-900 dark:text-white">Contact</a></li>
-                <li><a href="/about.html" class="block py-2 px-3 text-gray-900 dark:text-white">About</a></li>
+                <li><a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-red-500">Home</a></li>
+                <li><a href="/price.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-red-500">Pricing</a></li>
+                <li><a href="/contact.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-red-500">Contact</a></li>
+                <li><a href="/about.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-red-500">About</a></li>
               </ul>
             </div>
           </div>
@@ -44,108 +51,146 @@
     <div class=" max-w-screen-md px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 ">
     <div class="mx-auto place-self-center lg:col-span-7 ">  
     <h1 class="font-bold font-raleway text-4xl text-gray-900 dark:text-white mb-4 tracking-tight">Privacy Policy</h1>
+    <p class="font-roboto text-lg text-gray-700 dark:text-gray-400 mb-4">Last Updated: 11 November 2025</p>
     <hr class="my-12 border-gray-200 dark:border-gray-800">
-    <p class="font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">Barlow AI Labs ("Barlow AI", "we", "us", or "our") respects the privacy of our users ("you" or "your"). This Privacy Policy describes how we collect, use, and disclose your personal information when you visit our website (<a href="https://www.barlowailabs.com/" class="text-blue-500 dark:text-blue-400">Barlow AI Labs</a>) and use our services.</p>
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Information We Collect</h2>
+    <p class="font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">Barlow AI Labs ("Barlow AI", "we", "us", or "our") respects the privacy of our users ("you" or "your"). This Privacy Policy describes how we collect, use, and disclose your personal information when you visit our website (<a href="https://www.barlowailabs.com/" class="text-red-700 dark:text-red-500">Barlow AI Labs</a>) and use our services.</p>
+    
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Information We Collect</h2>
     <p class="font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">We may collect the following information about you:</p>
-    <ul class="font-roboto list-disc ml-6 mb-4">
-        <li class="text-gray-800 dark:text-gray-200">Personal Information: This includes information that can be used to identify you, such as your name, email address, phone number, and mailing address. We only collect this information if you voluntarily provide it to us, such as by contacting us through a form on the Website.</li>
-        <li class="text-gray-800 dark:text-gray-200">Non-Personal Information: This includes information that cannot be used to identify you, such as your browsing history, IP address, device type, and operating system. We collect this information automatically when you use the Website.</li>
+    <ul class="font-roboto list-disc ml-6 mb-4 space-y-2">
+        <li class="text-gray-800 dark:text-gray-200"><strong>Personal Information:</strong> This includes information you voluntarily provide to us, such as your name, email address, and any message you send through our contact form.</li>
+        <li class="text-gray-800 dark:text-gray-200"><strong>Usage and Technical Information:</strong> This includes information collected automatically when you use the Website, such as your IP address, device type, browsing history, and how you interact with our site. We collect this via cookies and analytics tools.</li>
     </ul>
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Use of Your Information</h2>
+
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">How We Use Your Information</h2>
     <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">We may use your information for the following purposes:</p>
-    <ul class=" font-roboto list-disc ml-6 mb-4">
-        <li class="text-gray-800 dark:text-gray-200">To provide and improve the Website and Services</li>
-        <li class="text-gray-800 dark:text-gray-200">To personalize your experience on the Website</li>
-        <li class="text-gray-800 dark:text-gray-200">To respond to your inquiries and requests</li>
-        <li class="text-gray-800 dark:text-gray-200">To send you marketing materials (with your consent)</li>
-        <li class="text-gray-800 dark:text-gray-200">To comply with legal and regulatory obligations</li>
+    <ul class=" font-roboto list-disc ml-6 mb-4 space-y-2">
+        <li class="text-gray-800 dark:text-gray-200">To provide, operate, and maintain our Website.</li>
+        <li class="text-gray-800 dark:text-gray-200">To respond to your inquiries and requests, such as when you fill out our contact form.</li>
+        <li class="text-gray-800 dark:text-gray-200">To improve and personalize your experience on the Website.</li>
+        <li class="text-gray-800 dark:text-gray-200">To send you an auto-reply email after you contact us.</li>
+        <li class="text-gray-800 dark:text-gray-200">To prevent spam and secure our Website (e.g., via reCAPTCHA).</li>
+        <li class="text-gray-800 dark:text-gray-200">To comply with legal and regulatory obligations.</li>
     </ul>
 
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Sharing Your Information</h2>
-    <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">We may share your information with third-party service providers who help us operate the Website and Services. These service providers are contractually obligated to keep your information confidential and secure.</p>
-    <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">We may also disclose your information if we are required to do so by law or if we believe it is necessary to protect the rights and safety of ourselves or others.</p>
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Third-Party Services</h2>
+    <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">Our website is built using Google Cloud services, including Firebase and Google Analytics. By using our site, you acknowledge that your information may be processed by these services.</p>
+    <ul class=" font-roboto list-disc ml-6 mb-4 space-y-2">
+        <li class="text-gray-800 dark:text-gray-200"><strong>Firebase (Google Cloud):</strong> Our website hosting, backend functions (contact form), and email queuing (Trigger Email Extension) are powered by Google's Firebase platform.</li>
+        <li class="text-gray-800 dark:text-gray-200"><strong>Google Analytics:</strong> We use Google Analytics to understand how visitors engage with our site. This service collects anonymous data to help us improve user experience.</li>
+        <li class="text-gray-800 dark:text-gray-200"><strong>Google reCAPTCHA:</strong> We use reCAPTCHA on our contact form to prevent spam. This service checks if you are a human and is subject to the Google <a href="https://policies.google.com/privacy" target="_blank" class="text-red-700 dark:text-red-500 hover:underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" class="text-red-700 dark:text-red-500 hover:underline">Terms of Service</a>.</li>
+    </ul>
 
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Data Security</h2>
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Sharing Your Information</h2>
+    <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">We do not sell your personal information. We may share your information with Google as described in the "Third-Party Services" section to operate our website. We may also disclose your information if we are required to do so by law.</p>
+
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Data Security</h2>
     <p class="text-lg font-roboto text-gray-800 dark:text-gray-200 mb-4">We take reasonable steps to protect your information from unauthorized access, disclosure, alteration, or destruction. However, no website or internet transmission is completely secure. We cannot guarantee the security of your information.</p>
 
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Your Choices</h2>
-    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">You have choices about how we collect, use, and share your information. You can:</p>
-    <ul class=" font-roboto list-disc ml-6 mb-4">
-        <li class="text-gray-800 dark:text-gray-200">Opt out of receiving marketing communications from us</li>
-        <li class="text-gray-800 dark:text-gray-200">Access and update your personal information</li>
-    </ul>
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Your Choices</h2>
+    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">You can use browser settings to block or delete cookies and opt-out of Google Analytics. You can also choose not to submit our contact form if you do not wish to provide your personal information.</p>
 
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Children's Privacy</h2>
-    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">The Website and Services are not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and you believe that your child has provided us with personal information, please contact us.</p>
-
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">International Transfers</h2>
-    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">Your information may be transferred to and processed in countries other than your own. These countries may have different data protection laws than your own country.</p>
-
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Changes to this Privacy Policy</h2>
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Changes to this Privacy Policy</h2>
     <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on the Website.</p>
 
-    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mb-2">Contact Us</h2>
-    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">If you have any questions about this Privacy Policy, please contact us by email at <a href="mailto:[insert email address]" class="text-blue-500 dark:text-blue-400">tevin@barlowailabs.com</a>.</p>
+    <h2 class="font-bold font-raleway text-2xl text-gray-900 dark:text-white mt-8 mb-2">Contact Us</h2>
+    <p class=" font-roboto text-lg text-gray-800 dark:text-gray-200 mb-4">If you have any questions about this Privacy Policy, please contact us by email at <a href="mailto:tevin@barlowailabs.com" class="text-red-700 dark:text-red-500 hover:underline">tevin@barlowailabs.com</a>.</p>
 </div>
 </div>
     </main>
 
-    <footer class=" bg-white border-gray-200 dark:bg-gray-900">
-      <div class="  w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
-          <div class="sm:flex sm:items-center sm:justify-between">
-              <a href="/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                  <img src="/static/img/trace.svg" class="h-8 md:h-8 w-8 md:w-8  "  alt="Barlow AI Labs Logo" />
-                  <span class="font-raleway self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Barlow AI Labs</span>
-              </a>
-              <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-700 sm:mb-0 dark:text-gray-400">
-                  <li>
-                      <a href="/about.html" class="font-raleway hover:underline me-4 md:me-6">About</a>
-                  </li>
-                  <li>
-                      <a href="/contact.html" class="font-raleway hover:underline me-4 md:me-6">Contact</a>
-                  </li>
-                  <li>
-                      <a href="/privacy.html" class="font-raleway hover:underline me-4 md:me-6">Privacy Policy</a>
-                  </li>
-                  <li>
-                      <a href="/terms.html" class="font-raleway hover:underline">Terms Of Service</a>
-                  </li>
-              </ul>
-          </div>
-          <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-          <div class="sm:flex sm:items-center sm:justify-between">
-              <span class="text-sm text-gray-700 sm:text-center dark:text-gray-400">© 2024 <a href="" class=" font-roboto hover:underline">Barlow AI Labs™</a>. All Rights Reserved.
-              </span>
-              <div class="flex mt-4 sm:justify-center sm:mt-0">
-                  <a href="https://www.facebook.com/profile.php?id=61561185902400&mibextid=ZbWKwL" target="_blank" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
-                            <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
-                        </svg>
-                      <span class="sr-only">Facebook page</span>
-                  </a>
-                  <a href="https://www.instagram.com/invites/contact/?igsh=1mr51ev5hbti6&utm_content=v0mx7k0" target="_blank" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
-                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"/>     
-                        </svg>
-                      <span class="sr-only">Instagram Page</span>
-                  </a>
-                  <a href="https://github.com/" target="_blank" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
-                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
-                      </svg>
-                      <span class="sr-only">GitHub account</span>
-                  </a>
-                  <a href="https://storyset.com/online" target="_blank" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
-                      <img src="/static/img/storyset_9836716.svg" class="w-4 h-4" aria-hidden="true" >
-                      </img>
-                      <span class="sr-only">Online illustrations by Storyset</span>
-                  </a>
-              </div>
-          </div>    
-      </div>
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="w-full max-w-screen-xl mx-auto p-4 py-8 md:py-16">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+                
+                <div class="mb-6 md:mb-0 col-span-1">
+                    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                        <img src="/static/img/trace.svg" class="h-8" alt="Barlow AI Labs Logo" />
+                        <span class="font-raleway self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Barlow AI Labs</span>
+                    </a>
+                    <p class="mt-4 text-gray-700 dark:text-gray-400 font-roboto text-sm">
+                        Empowering businesses with cutting-edge AI solutions and intelligent web experiences.
+                    </p>
+                </div>
+        
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white font-raleway">Quick Links</h2>
+                    <ul class="text-gray-700 dark:text-gray-400 font-roboto text-sm">
+                        <li class="mb-4">
+                            <a href="/" class="hover:underline">Home</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/about.html" class="hover:underline">About</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/price.html" class="hover:underline">Pricing</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/contact.html" class="hover:underline">Contact</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/terms.html" class="hover:underline">Terms of Service</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/privacy.html" class="hover:underline">Privacy Policy</a>
+                        </li>
+                        </ul>
+                </div>
+        
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white font-raleway">Services</h2>
+                    <ul class="text-gray-700 dark:text-gray-400 font-roboto text-sm">
+                        <li class="mb-4">
+                            <a href="/price.html" class="hover:underline">AI-Powered Web Design</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/price.html" class="hover:underline">Custom AI Solutions</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/price.html" class="hover:underline">Machine Learning</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/price.html" class="hover:underline">Data Analytics</a>
+                        </li>
+                    </ul>
+                </div>
+        
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white font-raleway">Connect With Us</h2>
+                    <ul class="text-gray-700 dark:text-gray-400 font-roboto text-sm">
+                        <li class="mb-4 flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                            <a href="mailto:contact@barlowailabs.com" class="hover:underline">contact@barlowailabs.com</a>
+                        </li>
+                    </ul>
+                    <div class="flex mt-6 space-x-4">
+                        <a href="https://www.facebook.com/profile.php?id=61561185902400&mibextid=ZbWKwL" target="_blank" class="flex items-center justify-center w-9 h-9 text-gray-500 bg-gray-100 rounded-full hover:text-gray-900 dark:bg-gray-700 dark:text-gray-400 dark:hover:text-white">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                                <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="sr-only">Facebook page</span>
+                        </a>
+                        <a href="https://www.instagram.com/invites/contact/?igsh=1mr51ev5hbti6&utm_content=v0mx7k0" target="_blank" class="flex items-center justify-center w-9 h-9 text-gray-500 bg-gray-100 rounded-full hover:text-gray-900 dark:bg-gray-700 dark:text-gray-400 dark:hover:text-white">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"/>      
+                            </svg>
+                            <span class="sr-only">Instagram Page</span>
+                        </a>
+                        <a href="https://github.com/BarlowAILabs/barlowailabs" target="_blank" class="flex items-center justify-center w-9 h-9 text-gray-500 bg-gray-100 rounded-full hover:text-gray-900 dark:bg-gray-700 dark:text-gray-400 dark:hover:text-white">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="sr-only">GitHub account</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            
+            <span class="block text-sm text-gray-700 sm:text-center dark:text-gray-400 font-roboto">© 2025 <a href="/" class="hover:underline">Barlow AI Labs™</a>. All Rights Reserved.</span>
+        </div>
     </footer>
-
     <script src="/static/js/main.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
